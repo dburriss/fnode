@@ -104,9 +104,11 @@ let fsprojPath = Path.Combine(rootPath, getArg "--fsproj")
 let changelogPath = Path.Combine(rootPath, "CHANGELOG.md")
 let solutionPath = Path.Combine(rootPath, getArg "--solution")
 
-// Tests run on VSTest (Microsoft.NET.Test.Sdk), so the solution is a positional argument.
-let testArguments = ["test"; solutionPath; "-c"; "Release"; "--no-build"]
-let testCommandDisplay = sprintf "dotnet test \"%s\" -c Release --no-build" solutionPath
+// Tests run on Microsoft.Testing.Platform (.NET 10, opted in through the "test" runner in
+// global.json): the solution is passed with --solution, and --nologo is left out because it
+// makes the test host report "Zero tests ran" (exit 5).
+let testArguments = ["test"; "--solution"; solutionPath; "-c"; "Release"; "--no-build"]
+let testCommandDisplay = sprintf "dotnet test --solution \"%s\" -c Release --no-build" solutionPath
 
 printfn "Checking files..."
 if not (File.Exists fsprojPath) then failwithf "Project file not found: %s" fsprojPath
