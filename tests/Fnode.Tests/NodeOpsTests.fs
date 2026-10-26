@@ -2,6 +2,7 @@ module NodeOpsTests
 
 open Xunit
 open FsCheck
+open FsCheck.FSharp
 open FsCheck.Xunit
 open Fnode
 
@@ -111,9 +112,9 @@ let rec private paths (n: Node) : Path list =
 
 let private genScalar =
     Gen.oneof [ Gen.constant Null
-                Gen.map Bool Arb.generate<bool>
-                Gen.map (int64 >> Int) Arb.generate<int>
-                Gen.map (fun (NonNull s) -> Str s) Arb.generate ]
+                Gen.map Bool (ArbMap.defaults |> ArbMap.generate<bool>)
+                Gen.map (int64 >> Int) (ArbMap.defaults |> ArbMap.generate<int>)
+                Gen.map (fun (NonNull s) -> Str s) (ArbMap.defaults |> ArbMap.generate) ]
 
 let private genNode =
     let rec go size =

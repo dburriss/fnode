@@ -205,6 +205,13 @@ module Arb =
 
     let fromGen (g: Gen<'a>) : Arbitrary<'a> = { Gen = g }
 
+/// FsCheck 3's `ArbMap.defaults |> ArbMap.generate<'T>`.
+type ArbMap = ArbMap
+
+module ArbMap =
+    let defaults = ArbMap
+    let inline generate<'T> (_: ArbMap) : Gen<'T> = Arb.generate<'T>
+
 namespace FsCheck.Xunit
 
 open System
@@ -247,3 +254,9 @@ module Check =
                 with e ->
                     failwithf "Falsifiable after %d tests (seed %d): threw %s\n%A" (i + 1) seed e.Message value
             if not ok then failwithf "Falsifiable after %d tests (seed %d):\n%A" (i + 1) seed value
+
+// Real FsCheck 3 keeps its F# `Gen` and `Arb` modules here; the shim defines them in `FsCheck`, so
+// this empty namespace only lets the shared tests `open FsCheck.FSharp` on both sides.
+namespace FsCheck.FSharp
+
+type Marker = class end
