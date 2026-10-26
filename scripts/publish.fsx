@@ -3,9 +3,9 @@
 // =================================================================================
 // Publish Script
 // =================================================================================
-// This script automates the release of a .NET project that is published to NuGet by
-// tag-triggered CI (there is no GitHub Release workflow). It never talks to nuget.org or
-// GitHub itself: pushing the v* tag is what starts the workflow.
+// This script automates the release of a .NET project that is published to NuGet and
+// GitHub Releases by tag-triggered CI. It never talks to nuget.org or GitHub itself:
+// pushing the v* tag is what starts the workflows.
 //
 // Normal release flow (when Unreleased changes exist):
 // 1. Reads the current version from the --fsproj file (or a Directory.Build.props that
