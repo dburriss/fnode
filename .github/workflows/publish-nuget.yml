@@ -53,7 +53,7 @@ jobs:
         uses: NuGet/login@v1
         id: login
         with:
-          user: ${{ vars.NUGET_USER }} # nuget.org username (profile name), NOT your email address
+          user: ${{ secrets.NUGET_USER }} # nuget.org username (profile name), NOT your email address
 
       - name: Publish to nuget.org
         run: |
