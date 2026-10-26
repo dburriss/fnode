@@ -31,6 +31,10 @@ jobs:
             ' CHANGELOG.md > release-notes.md
             if grep -q '[^[:space:]]' release-notes.md; then break; fi
           done
+          if ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::error::No release notes found in CHANGELOG.md for ${{ steps.version.outputs.version }} or Unreleased"
+            exit 1
+          fi
           cat release-notes.md
 
       - name: Setup .NET SDK
