@@ -39,7 +39,7 @@ jobs:
       # The tag is the version of record: it overrides <Version> in the project files.
       - name: Pack
         run: |
-          for project in src/Fnode/Fnode.fsproj; do
+          for project in src/Fnode.Core/Fnode.Core.fsproj; do
             dotnet pack "$project" \
               --configuration Release \
               --no-restore \

@@ -10,7 +10,7 @@ Last verified: 2026-10-26. `dotnet build Fnode.slnx -c Release` has 0 warnings, 
 
 | Project | Purpose |
 |---|---|
-| `src/Fnode` | Core: `Node`, `Path`, `Error`, `Parsed`, `Format`, `Node.tryGet/tryFind/exists/set/setCreating/remove`, key helpers, `Node.equals`. No dependencies |
+| `src/Fnode.Core` | Core: `Node`, `Path`, `Error`, `Parsed`, `Format`, `Node.tryGet/tryFind/exists/set/setCreating/remove`, key helpers, `Node.equals`. No dependencies |
 | `tests/Fnode.Tests` | Unit and property tests |
 | `tests/Fnode.Fable` | The same tests under Fable JS and Python |
 

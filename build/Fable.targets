@@ -5,8 +5,8 @@
     under fable/ (next to the lib/ DLLs). A consumer then needs only a plain PackageReference.
 
     The project file in fable/ is generated here from the Compile list, so it cannot drift from the real one.
-    If a package ever depends on Fnode, set FableNeedsFnode=true in that project: the real file holds a
-    ProjectReference, which does not exist inside a package, so the generated one names Fnode as a
+    If a package ever depends on Fnode.Core, set FableNeedsFnode=true in that project: the real file holds a
+    ProjectReference, which does not exist inside a package, so the generated one names Fnode.Core as a
     PackageReference at the version being packed.
 
     The generated file must not sit in a folder called fable: Fable then mistakes the project reference for a packed
@@ -30,7 +30,7 @@
       <FableLine Include="@(Compile->'    &lt;Compile Include=&quot;%(Identity)&quot; /&gt;')" />
       <FableLine Include="  &lt;/ItemGroup&gt;" />
       <FableLine Condition="'$(FableNeedsFnode)' == 'true'" Include="  &lt;ItemGroup&gt;" />
-      <FableLine Condition="'$(FableNeedsFnode)' == 'true'" Include="    &lt;PackageReference Include=&quot;Fnode&quot; Version=&quot;$(Version)&quot; /&gt;" />
+      <FableLine Condition="'$(FableNeedsFnode)' == 'true'" Include="    &lt;PackageReference Include=&quot;Fnode.Core&quot; Version=&quot;$(Version)&quot; /&gt;" />
       <FableLine Condition="'$(FableNeedsFnode)' == 'true'" Include="  &lt;/ItemGroup&gt;" />
       <FableLine Include="&lt;/Project&gt;" />
     </ItemGroup>

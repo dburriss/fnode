@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Fnode</PackageId>
+    <PackageId>Fnode.Core</PackageId>
     <IsPackable>true</IsPackable>
     <PackageTags>fsharp fable ast document json-pointer</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>

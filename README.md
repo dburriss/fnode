@@ -4,7 +4,7 @@ The shared document core in F#: one small tree, `Node`, that formats such as YAM
 JSON Pointer paths, errors that carry source locations, and a `Format` interface. Pure and Fable-safe: no
 dependencies, no reflection, no IO. It compiles to .NET, Fable JavaScript and Fable Python from the same source.
 
-This repo holds only the core, the `Fnode` package. Format adapters (YAML, JSON) live elsewhere and depend on it.
+This repo holds only the core, the `Fnode.Core` package. Format adapters (YAML, JSON) live elsewhere and depend on it.
 Status: pre-release, nothing is published yet (the first version will be `0.1.0-alpha.1`).
 
 ```fsharp
@@ -20,7 +20,7 @@ Path.parse "/ports/1" |> Result.bind (fun p -> Node.set p (Int 8443L) doc)
 ## Layout
 
 ```
-src/Fnode          the package
+src/Fnode.Core     the package
 tests/Fnode.Tests  unit and property tests (xUnit, FsCheck)
 tests/Fnode.Fable  the same tests under Fable JS and Python
 docs/              Fable notes, the Fnode API findings

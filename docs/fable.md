@@ -9,7 +9,7 @@ The package ships its F# sources and a project file under `fable/` (in compile o
 which is what Fable compiles from. A plain package reference is enough:
 
 ```xml
-<PackageReference Include="Fnode" Version="0.1.0-alpha.1" />
+<PackageReference Include="Fnode.Core" Version="0.1.0-alpha.1" />
 ```
 
 ```bash
@@ -52,7 +52,7 @@ and Fable runs explore different cases. `Check.maxCases` caps cases per property
 
 ### Gotcha: do not put a generated project in a folder called `fable`
 
-The harness references `src/Fnode` by project. If that project has a folder named `fable` holding an `.fsproj`
+The harness references `src/Fnode.Core` by project. If that project has a folder named `fable` holding an `.fsproj`
 (for example under `obj/Release/`), Fable takes the reference for an already packed Fable package and fails with
 "Files in libraries ... must begin with a namespace or module declaration". `build/Fable.targets` generates the
 project that ships under `fable/` in the package, so it writes it to `obj/<config>/pack-fable-project/` instead.

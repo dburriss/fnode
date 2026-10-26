@@ -1,4 +1,4 @@
-# Fnode
+# Fnode.Core
 
 The shared document core: one small tree, `Node`, that YAML and JSON (and other formats) both parse to, with
 JSON Pointer paths, structured errors with source locations, and a `Format` interface. Pure and Fable-safe:
@@ -9,7 +9,7 @@ Format adapters (YAML, JSON) are separate packages that depend on it.
 ## Install
 
 ```sh
-dotnet add package Fnode --prerelease
+dotnet add package Fnode.Core --prerelease
 ```
 
 ## Example

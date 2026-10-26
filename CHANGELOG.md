@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The package id is now `Fnode.Core`, matching the `Fnode.JsonAdapter` and `Fnode.YamlAdapter` packages that depend on
+  it. The namespace stays `Fnode`. The `Fnode` package (0.1.0) is superseded: use `Fnode.Core`.
+
 ## [0.1.0] - 2026-10-26
 
 ### Added

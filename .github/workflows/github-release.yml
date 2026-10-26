@@ -44,7 +44,7 @@ jobs:
 
       - name: Pack
         run: |
-          dotnet pack src/Fnode/Fnode.fsproj \
+          dotnet pack src/Fnode.Core/Fnode.Core.fsproj \
             --configuration Release \
             --output ./artifacts \
             -p:Version=${{ steps.version.outputs.version }}
