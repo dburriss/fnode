@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Fnode/Fnode.fsproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fnode.Tests/Fnode.Tests.fsproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Fnode</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable ast document json-pointer</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <Description>Shared document core: the Node tree, JSON Pointer paths, errors with source locations and the Format interface. Pure and Fable-safe, no dependencies.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Node.fs" />
+    <Compile Include="Error.fs" />
+    <Compile Include="Path.fs" />
+    <Compile Include="NodeOps.fs" />
+    <Compile Include="Format.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>

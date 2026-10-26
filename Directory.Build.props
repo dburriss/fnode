@@ -1,0 +1,25 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
+    <Version>0.1.0-alpha.1</Version>
+    <PackageReleaseNotes>First alpha of Fnode, the shared document core.</PackageReleaseNotes>
+    <Authors>Devon Burriss</Authors>
+    <Copyright>Copyright © 2026 Devon Burriss</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dburriss/fnode</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dburriss/fnode</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <OtherFlags>$(OtherFlags) --nowarn:57</OtherFlags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+</Project>
