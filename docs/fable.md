@@ -9,7 +9,7 @@ The package ships its F# sources and a project file under `fable/` (in compile o
 which is what Fable compiles from. A plain package reference is enough:
 
 ```xml
-<PackageReference Include="Fnode.Core" Version="0.1.0-alpha.1" />
+<PackageReference Include="Fnode.Core" Version="x.y.z" />
 ```
 
 ```bash

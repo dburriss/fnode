@@ -31,7 +31,6 @@ Last verified: 2026-10-26. `dotnet build Fnode.slnx -c Release` has 0 warnings, 
 ## Next
 
 1. [x] Priority-1 and priority-2 API fixes (see `docs/api-findings.md`).
-2. [ ] Publish `0.1.0-alpha.1`: nuget.org Trusted Publishing policy, `NUGET_USER` secret, then tag by hand
-   (the release script always bumps the version, and `0.1.0-alpha.1` is already set).
+2. [ ] Publish the first `Fnode.Core` version: `NUGET_USER` secret, then run `./publish.sh` (versions restart from `0.0.0`).
 3. [ ] Request the `Fnode.` package id prefix reservation on nuget.org; pick npm and PyPI names (`fnode` is taken on npm).
 4. [ ] Adapters (YAML, JSON) and consumers (Fergi, Falid) take the package as a dependency.

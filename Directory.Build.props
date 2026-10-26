@@ -2,7 +2,7 @@
 <Project>
   <PropertyGroup>
     <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
-    <Version>0.1.0</Version>
+    <Version>0.0.0</Version>
     <PackageReleaseNotes>`Fnode`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
 The package ships its F# sources under `fable/`, so Fable JavaScript and Python projects can use a plain</PackageReleaseNotes>
     <Authors>Devon Burriss</Authors>

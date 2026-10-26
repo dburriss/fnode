@@ -5,7 +5,7 @@ JSON Pointer paths, errors that carry source locations, and a `Format` interface
 dependencies, no reflection, no IO. It compiles to .NET, Fable JavaScript and Fable Python from the same source.
 
 This repo holds only the core, the `Fnode.Core` package. Format adapters (YAML, JSON) live elsewhere and depend on it.
-Status: pre-release, nothing is published yet (the first version will be `0.1.0-alpha.1`).
+Status: pre-release, nothing is published yet under the `Fnode.Core` name.
 
 ```fsharp
 open Fnode
