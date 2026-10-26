@@ -1,9 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-
   <PropertyGroup>
     <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
-    <Version>0.1.0-alpha.1</Version>
-    <PackageReleaseNotes>First alpha of Fnode, the shared document core.</PackageReleaseNotes>
+    <Version>0.1.0</Version>
+    <PackageReleaseNotes>`Fnode`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
+The package ships its F# sources under `fable/`, so Fable JavaScript and Python projects can use a plain</PackageReleaseNotes>
     <Authors>Devon Burriss</Authors>
     <Copyright>Copyright © 2026 Devon Burriss</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -21,5 +22,4 @@
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
-
 </Project>
