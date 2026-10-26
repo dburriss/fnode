@@ -1,0 +1,57 @@
+name: GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'    # e.g., v0.1.0 or v0.1.0-alpha.1
+
+permissions:
+  contents: write   # required to create the release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Determine version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # Stable releases have their own CHANGELOG section; prereleases leave the changelog
+      # untouched, so their notes come from "Unreleased".
+      - name: Extract release notes
+        run: |
+          for heading in "## [${{ steps.version.outputs.version }}]" "## [Unreleased]"; do
+            awk -v h="$heading" '
+              index($0, h) == 1 { found = 1; next }
+              found && /^## \[/ { exit }
+              found { print }
+            ' CHANGELOG.md > release-notes.md
+            if grep -q '[^[:space:]]' release-notes.md; then break; fi
+          done
+          cat release-notes.md
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Pack
+        run: |
+          dotnet pack src/Fnode/Fnode.fsproj \
+            --configuration Release \
+            --output ./artifacts \
+            -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prerelease=""
+          if [[ "${{ steps.version.outputs.version }}" == *-* ]]; then prerelease="--prerelease"; fi
+          gh release create "$GITHUB_REF_NAME" ./artifacts/*.nupkg \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file release-notes.md \
+            $prerelease
