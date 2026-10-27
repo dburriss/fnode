@@ -2,8 +2,10 @@
 <Project>
   <PropertyGroup>
     <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
-    <Version>0.0.0</Version>
-    <PackageReleaseNotes>`Fnode`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
+    <Version>0.1.0</Version>
+    <PackageReleaseNotes>`Fnode.Json` (JSON adapter on `Flexi.Json`) and `Fnode.Yaml` (YAML adapter on `Flexi.Yaml`) packages, each
+Lockstep releases: one `v*` tag packs and publishes `Fnode.Core`, `Fnode.Json` and `Fnode.Yaml` at the same
+`Fnode.Core`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
 The package ships its F# sources under `fable/`, so Fable JavaScript and Python projects can use a plain</PackageReleaseNotes>
     <Authors>Devon Burriss</Authors>
     <Copyright>Copyright © 2026 Devon Burriss</Copyright>

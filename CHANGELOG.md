@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-27
+
 ### Added
 
 - `Fnode.Json` (JSON adapter on `Flexi.Json`) and `Fnode.Yaml` (YAML adapter on `Flexi.Yaml`) packages, each
