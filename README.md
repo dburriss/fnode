@@ -4,7 +4,8 @@ The shared document core in F#: one small tree, `Node`, that formats such as YAM
 JSON Pointer paths, errors that carry source locations, and a `Format` interface. Pure and Fable-safe: no
 dependencies, no reflection, no IO. It compiles to .NET, Fable JavaScript and Fable Python from the same source.
 
-This repo holds only the core, the `Fnode.Core` package. Format adapters (YAML, JSON) live elsewhere and depend on it.
+This repo holds the core (`Fnode.Core`) and the format adapters `Fnode.Json` and `Fnode.Yaml`, each its own package.
+The adapters depend on the core and on the `Flexi.Json` / `Flexi.Yaml` NuGet packages; the core has no dependencies.
 Status: pre-release, nothing is published yet under the `Fnode.Core` name.
 
 ```fsharp
@@ -20,7 +21,9 @@ Path.parse "/ports/1" |> Result.bind (fun p -> Node.set p (Int 8443L) doc)
 ## Layout
 
 ```
-src/Fnode.Core     the package
+src/Fnode.Core     the core package
+src/Fnode.Json     the JSON adapter package
+src/Fnode.Yaml     the YAML adapter package
 tests/Fnode.Tests  unit and property tests (xUnit, FsCheck)
 tests/Fnode.Fable  the same tests under Fable JS and Python
 docs/              Fable notes, the Fnode API findings
@@ -40,6 +43,23 @@ scripts/fable-test.sh all        # the tests under Fable JS and Python (slow; ne
 The .NET SDK is 10; the library targets `netstandard2.0` and `net8.0`. Fable is pinned to 5.21.0 in
 `.config/dotnet-tools.json`. The package ships its F# sources under `fable/`, so a Fable project needs only a
 `PackageReference`; see [`docs/fable.md`](docs/fable.md).
+
+## Releases
+
+`Fnode.Core`, `Fnode.Json` and `Fnode.Yaml` release in lockstep: one `v*` tag packs and publishes all three at the
+same version, so `Fnode.Json 0.2.0` always depends on `Fnode.Core 0.2.0`. They are still separate packages and each
+can be used alone:
+
+- `Fnode.Core` has no dependencies.
+- `Fnode.Json` needs only `Fnode.Core` and `Flexi.Json`.
+- `Fnode.Yaml` needs only `Fnode.Core` and `Flexi.Yaml`.
+
+To release, run `dotnet fsi scripts/publish.fsx --fsproj Directory.Build.props --solution Fnode.slnx` (it bumps the
+one `<Version>` in `Directory.Build.props`, updates `CHANGELOG.md`, commits and tags) and push the tag. The tag then
+starts the GitHub Actions workflows: `publish-nuget.yml` checks the tag against `<Version>`, runs `scripts/pack.sh`
+(the one list of packages; it fails if any package is missing or not in `Fnode.slnx`) and pushes every nupkg to
+nuget.org through Trusted Publishing; `github-release.yml` attaches the same nupkgs to a GitHub Release. A core-only
+change still releases the adapters.
 
 ## License
 

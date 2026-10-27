@@ -1,6 +1,6 @@
 # Status
 
-Snapshot of the Fnode core. How it fits together is in `ARCHITECTURE.md`; decisions are in `DECISIONS.md`; Fable
+Snapshot of the Fnode core and its Json and Yaml adapters. How it fits together is in `ARCHITECTURE.md`; decisions are in `DECISIONS.md`; Fable
 notes are in `docs/fable.md`; the API findings that shaped the core are in `docs/api-findings.md`; rules for
 coding agents are in `AGENTS.md`.
 
@@ -11,6 +11,8 @@ Last verified: 2026-10-26. `dotnet build Fnode.slnx -c Release` has 0 warnings, 
 | Project | Purpose |
 |---|---|
 | `src/Fnode.Core` | Core: `Node`, `Path`, `Error`, `Parsed`, `Format`, `Node.tryGet/tryFind/exists/set/setCreating/remove`, key helpers, `Node.equals`. No dependencies |
+| `src/Fnode.Json` | JSON adapter (`Format`). Depends on `Fnode.Core` (project) and `Flexi.Json` (NuGet) |
+| `src/Fnode.Yaml` | YAML adapter (`Format`). Depends on `Fnode.Core` (project) and `Flexi.Yaml` (NuGet) |
 | `tests/Fnode.Tests` | Unit and property tests |
 | `tests/Fnode.Fable` | The same tests under Fable JS and Python |
 
@@ -31,6 +33,8 @@ Last verified: 2026-10-26. `dotnet build Fnode.slnx -c Release` has 0 warnings, 
 ## Next
 
 1. [x] Priority-1 and priority-2 API fixes (see `docs/api-findings.md`).
-2. [ ] Publish the first `Fnode.Core` version: `NUGET_USER` secret, then run `./publish.sh` (versions restart from `0.0.0`).
+2. [ ] Publish the first lockstep release (`Fnode.Core`, `Fnode.Json`, `Fnode.Yaml`): `NUGET_USER` secret, Trusted Publishing
+   policies for the new package ids, then `scripts/publish.fsx` (versions restart from `0.0.0`). `scripts/pack.sh` refuses to
+   release a package that is missing from `Fnode.slnx`.
 3. [ ] Request the `Fnode.` package id prefix reservation on nuget.org; pick npm and PyPI names (`fnode` is taken on npm).
-4. [ ] Adapters (YAML, JSON) and consumers (Fergi, Falid) take the package as a dependency.
+4. [ ] Consumers (Fergi, Falid) take `Fnode.Core` and the adapters as package dependencies.

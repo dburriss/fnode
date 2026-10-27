@@ -4,7 +4,8 @@ The shared document core: one small tree, `Node`, that YAML and JSON (and other 
 JSON Pointer paths, structured errors with source locations, and a `Format` interface. Pure and Fable-safe:
 no dependencies, no reflection, no IO. Runs on .NET, Fable JavaScript and Fable Python from the same source.
 
-Format adapters (YAML, JSON) are separate packages that depend on it.
+The format adapters `Fnode.Json` and `Fnode.Yaml` live in the same repo as separate packages that depend on it.
+All three release in lockstep (one tag, one version); `Fnode.Core` itself has no dependencies and works alone.
 
 ## Install
 

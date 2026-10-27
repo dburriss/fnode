@@ -4,7 +4,7 @@ Findings about the `Fnode` API from the Fergi spike (delivery step 5): Fergi con
 reference before anything was published, so mistakes in the core API cost nothing. This is the part of the
 spike's findings document that is about Fnode; the rest (Fergi design, merge laws, Fergi under Fable) stays in
 the Fergi repo (`docs/fergi-spike.md` there). References to `Fergi` below are the consumer that hit the friction.
-The YAML and JSON adapters mentioned below are not in this repo; names are as of the spike.
+The YAML and JSON adapters mentioned below are now `Fnode.Yaml` and `Fnode.Json` in this repo; names below are as of the spike.
 
 ## Fnode API friction (deduplicated, with fixes)
 

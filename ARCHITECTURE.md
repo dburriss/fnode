@@ -8,12 +8,14 @@ reasoning behind the larger choices.
 ```
  files (YAML / JSON / ...)   what people and programs read and write
         |
- format adapters             separate packages: text <-> Node, with source locations
+ format adapters             Fnode.Json, Fnode.Yaml: text <-> Node, with source locations
         |
  Fnode                       Node, Path, Error, Parsed, Format: the shared core, no dependencies
 ```
 
-This repo is the bottom layer only. A format adapter implements `Format` and fills `Parsed.Locations`; a
+This repo holds the bottom two layers: the core and the Json and Yaml adapters, each its own project and package.
+The adapters depend on the core by project reference and on `Flexi.Json` / `Flexi.Yaml` by `PackageReference`
+only; the core depends on nothing. A format adapter implements `Format` and fills `Parsed.Locations`; a
 consumer (a merge or mapping library, a linter) works on `Node` and never needs to know which format the
 document came from. Each layer depends only on the ones below it.
 

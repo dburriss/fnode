@@ -22,8 +22,10 @@ Run what covers your change and report the result as it is (a failing test is a 
 - **The core is Fable-safe.** `Fnode` compiles to .NET, Fable JS and Fable Python from the same source. There is
   **no reflection, no IO and no dependencies** in it. Keep any non-portable BCL call behind a
   `#if FABLE_COMPILER` branch (see `docs/fable.md`).
-- This repo is the core only. Format parsers and adapters (YAML, JSON) are other packages that depend on `Fnode`;
-  do not add them here.
+- This repo holds the core `Fnode.Core` and the adapters `Fnode.Json` and `Fnode.Yaml`, each its own project under
+  `src/` and its own package. The adapters depend on `Fnode.Core` (project reference) and on `Flexi.Json` /
+  `Flexi.Yaml` (`PackageReference` only); do not copy the Flexi libraries' code into this repo or add other format
+  adapters without a decision entry. The core itself keeps no dependencies.
 - When you add a test file to `tests/Fnode.Tests`, add the same `<Compile Include=...>` line to
   `tests/Fnode.Fable/Fnode.Fable.fsproj`.
 - The version lives in `Directory.Build.props` (one `<Version>`).
