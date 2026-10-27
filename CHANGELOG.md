@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `Fnode.Json` (JSON adapter on `Flexi.Json`) and `Fnode.Yaml` (YAML adapter on `Flexi.Yaml`) packages, each
+  usable alone: `Fnode.Json` needs only `Fnode.Core` and `Flexi.Json`, `Fnode.Yaml` only `Fnode.Core` and
+  `Flexi.Yaml`.
+- Lockstep releases: one `v*` tag packs and publishes `Fnode.Core`, `Fnode.Json` and `Fnode.Yaml` at the same
+  version (`scripts/pack.sh` holds the package list and fails if a package is missing), with each adapter
+  depending on `Fnode.Core` at that exact version. The workflows also check the tag against `Directory.Build.props`.
+
 - `Fnode.Core`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
   ISO text), JSON Pointer `Path` with `Path.escapeSegment`/`unescapeSegment`/`parseSegment`/`resolve`, `Error`
   with structured context (`withContext`, `mapMessage`, `describe`), `Parsed` (the tree plus source locations)

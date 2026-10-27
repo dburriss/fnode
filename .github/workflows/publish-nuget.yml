@@ -36,16 +36,21 @@ jobs:
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      # The tag is the version of record: it overrides <Version> in the project files.
-      - name: Pack
+      # The tag is the version of record; Directory.Build.props must say the same, so a tag cannot ship a
+      # different version than the one the release script committed.
+      - name: Check tag matches Directory.Build.props
+        if: github.ref_type == 'tag'
         run: |
-          for project in src/Fnode.Core/Fnode.Core.fsproj; do
-            dotnet pack "$project" \
-              --configuration Release \
-              --no-restore \
-              --output ./artifacts \
-              -p:Version=${{ steps.version.outputs.version }}
-          done
+          props=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Directory.Build.props | head -n 1)
+          if [ "$props" != "${{ steps.version.outputs.version }}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match <Version>$props</Version> in Directory.Build.props"
+            exit 1
+          fi
+
+      # One tag releases every package in lockstep: scripts/pack.sh holds the list and fails if any package is
+      # missing. The tag version overrides <Version>, and the adapters' Fnode.Core dependency gets the same version.
+      - name: Pack
+        run: scripts/pack.sh "${{ steps.version.outputs.version }}" ./artifacts
 
       # Exchanges the job's OIDC token for a short-lived (1 hour) nuget.org API key.
       # Requires a Trusted Publishing policy on nuget.org for this repo + this workflow file name.
@@ -57,7 +62,17 @@ jobs:
 
       - name: Publish to nuget.org
         run: |
-          dotnet nuget push ./artifacts/*.nupkg \
-            --source https://api.nuget.org/v3/index.json \
-            --api-key ${{ steps.login.outputs.NUGET_API_KEY }} \
-            --skip-duplicate
+          shopt -s nullglob
+          packages=(./artifacts/*.nupkg)
+          if [ ${#packages[@]} -eq 0 ]; then
+            echo "::error::No packages in ./artifacts"
+            exit 1
+          fi
+          # The glob sorts alphabetically, so Fnode.Core is pushed before the adapters that depend on it.
+          for package in "${packages[@]}"; do
+            echo "Pushing $package"
+            dotnet nuget push "$package" \
+              --source https://api.nuget.org/v3/index.json \
+              --api-key ${{ steps.login.outputs.NUGET_API_KEY }} \
+              --skip-duplicate
+          done
