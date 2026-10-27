@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Fnode.Yaml</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable yaml fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <Description>YAML adapter for Fnode: parses YAML text to a Node with source locations and the original timestamp text, and prints it back. Built on Flexi.Yaml; runs on .NET, Fable JavaScript and Fable Python.</Description>
+    <!-- The generated project under fable/ names Fnode.Core as a PackageReference (see build/Fable.targets). -->
+    <FableNeedsFnode>true</FableNeedsFnode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Convert.fs" />
+    <Compile Include="YamlFormat.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Fnode.Core/Fnode.Core.fsproj" />
+    <PackageReference Include="Flexi.Yaml" Version="0.1.0" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Fnode.Json</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable json fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <Description>JSON adapter for Fnode: parses JSON text to a Node with source locations and prints it back. Built on Flexi.Json; runs on .NET, Fable JavaScript and Fable Python.</Description>
+    <!-- The generated project under fable/ names Fnode.Core as a PackageReference (see build/Fable.targets). -->
+    <FableNeedsFnode>true</FableNeedsFnode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Convert.fs" />
+    <Compile Include="JsonFormat.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Fnode.Core/Fnode.Core.fsproj" />
+    <PackageReference Include="Flexi.Json" Version="0.1.0" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>

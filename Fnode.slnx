@@ -1,8 +1,13 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Fnode.Core/Fnode.Core.fsproj" />
+    <Project Path="src/Fnode.Json/Fnode.Json.fsproj" />
+    <Project Path="src/Fnode.Yaml/Fnode.Yaml.fsproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Fnode.Tests/Fnode.Tests.fsproj" />
+    <Project Path="tests/Fnode.Json.Tests/Fnode.Json.Tests.fsproj" />
+    <Project Path="tests/Fnode.Yaml.Tests/Fnode.Yaml.Tests.fsproj" />
+    <Project Path="tests/Fnode.Conformance/Fnode.Conformance.fsproj" />
   </Folder>
 </Solution>

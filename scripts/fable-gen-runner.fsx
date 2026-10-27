@@ -17,7 +17,7 @@ let testsRoot = Path.Combine(root, "tests")
 let outDir = Path.Combine(testsRoot, "Fnode.Fable")
 
 /// The .NET test projects whose sources are shared, in run order.
-let projects = [ "Fnode.Tests" ]
+let projects = [ "Fnode.Tests"; "Fnode.Json.Tests"; "Fnode.Yaml.Tests"; "Fnode.Conformance" ]
 
 /// Test files left out of the Fable run (replaced by hand-written equivalents in tests/Fnode.Fable).
 let skipFiles = Set.empty<string>
