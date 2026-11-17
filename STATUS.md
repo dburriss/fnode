@@ -4,13 +4,13 @@ Snapshot of the Fnode core and its Json and Yaml adapters. How it fits together 
 notes are in `docs/fable.md`; the API findings that shaped the core are in `docs/api-findings.md`; rules for
 coding agents are in `AGENTS.md`.
 
-Last verified: 2026-10-26. `dotnet build Fnode.slnx -c Release` has 0 warnings, `dotnet test` passes 30 tests, and `scripts/fable-test.sh all` passes 30 entries on Fable JS and on Fable Python. Nothing is published.
+Last verified: 2026-11-17. `dotnet build Fnode.slnx -c Release` has 0 warnings, `dotnet test` passes 158 tests, and `scripts/fable-test.sh all` passes 141 entries on Fable JS and on Fable Python. The 0.2.0 changes (`Parsed.ScalarText`, the Yaml non-string-key location, the net10.0 retarget) are committed on `main` but not released; 0.1.0 is the last published version.
 
 ## What is in this repo
 
 | Project | Purpose |
 |---|---|
-| `src/Fnode.Core` | Core: `Node`, `Path`, `Error`, `Parsed`, `Format`, `Node.tryGet/tryFind/exists/set/setCreating/remove`, key helpers, `Node.equals`. No dependencies |
+| `src/Fnode.Core` | Core: `Node`, `Path`, `Error`, `Parsed` (with `Locations` and `ScalarText`), `Format`, `Node.tryGet/tryFind/exists/set/setCreating/remove`, key helpers, `Node.equals`. No dependencies |
 | `src/Fnode.Json` | JSON adapter (`Format`). Depends on `Fnode.Core` (project) and `Flexi.Json` (NuGet) |
 | `src/Fnode.Yaml` | YAML adapter (`Format`). Depends on `Fnode.Core` (project) and `Flexi.Yaml` (NuGet) |
 | `tests/Fnode.Tests` | Unit and property tests |

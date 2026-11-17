@@ -15,7 +15,7 @@ reasoning behind the larger choices.
 
 This repo holds the bottom two layers: the core and the Json and Yaml adapters, each its own project and package.
 The adapters depend on the core by project reference and on `Flexi.Json` / `Flexi.Yaml` by `PackageReference`
-only; the core depends on nothing. A format adapter implements `Format` and fills `Parsed.Locations`; a
+only; the core depends on nothing. A format adapter implements `Format` and fills `Parsed.Locations` and `Parsed.ScalarText` (the source text of numbers, which `Node` cannot keep); a
 consumer (a merge or mapping library, a linter) works on `Node` and never needs to know which format the
 document came from. Each layer depends only on the ones below it.
 

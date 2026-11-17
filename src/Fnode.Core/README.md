@@ -28,7 +28,8 @@ Path.parse "/ports/1" |> Result.bind (fun p -> Node.set p (Int 8443L) doc)
 
 `Node` is `Null | Bool | Int of int64 | Float | Str | Timestamp of string | Arr | Obj`. `Int` is an exact `int64`
 on every target and `Timestamp` keeps the original ISO text. Operations return `Result<_, Error>`; an `Error`
-has a stable code, a path, an optional source location and context entries.
+has a stable code, a path, an optional source location and context entries. `Parsed` is the node plus
+`Locations` (source spans) and `ScalarText` (the written text of numbers), both keyed by JSON Pointer.
 
 ## Learn more
 

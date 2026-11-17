@@ -19,6 +19,27 @@ Revisit if: the signals that should reopen it.
 See: files, docs or commits.
 ```
 
+## Original number text comes from the parsers and travels in Parsed.ScalarText
+Date: 2026-11-17. Status: Accepted.
+
+Decision: `Flexi.Json` and `Flexi.Yaml` 0.2.0 record the source text of every number (`JsonParsed.NumberText`,
+`YamlParsed.NumberText`, like `YamlParsed.TimestampText`). The adapters pass it through as `Parsed.ScalarText`,
+a pointer-keyed map beside `Locations`. `Node` is unchanged.
+
+Why: YAML `1.10` became `Float 1.1` and `1.0` became `Float 1`, and JSON integers beyond int64 became a lossy
+`Float`. A consumer that must write a value back, or compare versions, needs the text. The parser knows exactly what
+it read, including through YAML aliases.
+
+Rejected:
+- **Slicing the source by span in the adapters**: works without a Flexi release, but an aliased number's span is the
+  alias token, so it needs a re-parse guard and still has no text there.
+- **`Node.Number of string` or a text field on `Float`/`Int`**: breaks every consumer's pattern matches.
+
+Costs: `Parsed` gained a field (source-breaking for record literals, hence 0.2.0). The Flexi 0.2.0 packages raise the
+FSharp.Core floor to 11.0.101, which the adapters inherit.
+Revisit if: another scalar kind needs its original text (then widen the map's meaning, not the type).
+See: `Parsed` in `src/Fnode.Core/Error.fs`, the `ScalarText` tests in both adapters' test projects.
+
 ## This repo holds the core and the Json and Yaml adapters
 Date: 2026-10-26. Status: Accepted.
 

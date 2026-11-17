@@ -26,5 +26,8 @@ match Json.format.Parse """{ "name": "web", "ports": [80, 443] }""" with
 Json.format.Print(Obj [ "a", Int 1L ])   // pretty (2-space) JSON
 ```
 
+`parsed.ScalarText` maps the pointer of each number to the text it was written as (`1.10`, `1E+2`, or an integer
+beyond int64), which `Node` cannot keep. For duplicate keys, `Locations` and `ScalarText` describe the first occurrence.
+
 `Timestamp` prints as a JSON string and JSON strings parse back as `Str`. Parse failures come back as an
 `Error list` with the line and column of the problem.
