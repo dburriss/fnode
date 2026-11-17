@@ -4,7 +4,7 @@ Snapshot of the Fnode core and its Json and Yaml adapters. How it fits together 
 notes are in `docs/fable.md`; the API findings that shaped the core are in `docs/api-findings.md`; rules for
 coding agents are in `AGENTS.md`.
 
-Last verified: 2026-11-17. `dotnet build Fnode.slnx -c Release` has 0 warnings, `dotnet test` passes 158 tests, and `scripts/fable-test.sh all` passes 141 entries on Fable JS and on Fable Python. The 0.2.0 changes (`Parsed.ScalarText`, the Yaml non-string-key location, the net10.0 retarget) are committed on `main` but not released; 0.1.0 is the last published version.
+Last verified: 2026-11-17. `dotnet build Fnode.slnx -c Release` has 0 warnings, `dotnet test` passes 159 tests, and `scripts/fable-test.sh all` passes 142 entries on Fable JS and on Fable Python. The 0.2.0 changes (`Parsed.ScalarText`, the Yaml non-string-key location, the net10.0 retarget) are committed on `main` but not released; 0.1.0 is the last published version.
 
 ## What is in this repo
 

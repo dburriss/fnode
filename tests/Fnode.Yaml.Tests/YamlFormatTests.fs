@@ -275,6 +275,15 @@ let ``ScalarText keeps the number text the Node loses`` () =
         scalarText "a: 1.10\nb:\n  c: 3.0\n  d: text")
 
 [<Fact>]
+let ``ScalarText keeps every YAML number spelling`` () =
+    // `1_000` is a string in YAML 1.2, so it has no entry.
+    let spellings = [ "0x1F"; "0o17"; "+1"; "-0"; ".inf"; "-.inf"; ".nan"; "1_000"; "0.1"; "1e21"; "1E+21"; "9223372036854775808"; "-9223372036854775809" ]
+    let expected = spellings |> List.indexed |> List.filter (fun (_, t) -> t <> "1_000") |> List.map (fun (i, t) -> "/" + string i, t)
+    Assert.Equal<(string * string) list>(
+        expected |> List.sortBy fst,
+        scalarText ("[" + String.concat ", " spellings + "]") |> List.sortBy fst)
+
+[<Fact>]
 let ``ScalarText has no entry for strings, quoted numbers or timestamps`` () =
     Assert.Empty(scalarText "a: \"1.10\"\nb: 'x'\nc: yes\nd: 2026-10-14\ne: ~")
 

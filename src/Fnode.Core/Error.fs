@@ -10,7 +10,8 @@ type Span = { Start: Pos; End: Pos }
 /// - `Locations`: the source span of each node.
 /// - `ScalarText`: the text each `Int`/`Float` node was written as in the source (`1.10`, `1.0`, `1e3`,
 ///   or an integer beyond int64), which `Node` cannot keep. A pointer with no entry has no recoverable text
-///   (an adapter that does not provide it, or a number reached through a YAML alias); use the `Node` value.
+///   (an adapter that does not provide it); use the `Node` value. A number reached through a YAML alias or merge
+///   key reports the anchor's text.
 /// - For duplicate object keys, `Node` keeps both pairs (lookups take the first) but `Locations` and
 ///   `ScalarText` describe the first occurrence only.
 type Parsed =
