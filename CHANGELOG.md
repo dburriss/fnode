@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Target frameworks are now `netstandard2.0` and `net10.0` (was `netstandard2.0` and `net8.0`; .NET 8 is out of LTS).
+  Projects on .NET 8 or 9 keep working through the `netstandard2.0` assets.
+
 ## [0.1.0] - 2026-10-27
 
 ### Added

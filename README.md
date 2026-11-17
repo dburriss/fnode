@@ -40,7 +40,7 @@ dotnet test Fnode.slnx -c Release
 scripts/fable-test.sh all        # the tests under Fable JS and Python (slow; needs bun or node, Python 3.12+)
 ```
 
-The .NET SDK is 10; the library targets `netstandard2.0` and `net8.0`. Fable is pinned to 5.21.0 in
+The .NET SDK is 10; the library targets `netstandard2.0` and `net10.0`. Fable is pinned to 5.21.0 in
 `.config/dotnet-tools.json`. The package ships its F# sources under `fable/`, so a Fable project needs only a
 `PackageReference`; see [`docs/fable.md`](docs/fable.md).
 
