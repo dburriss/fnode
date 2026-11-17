@@ -21,11 +21,23 @@ let private pathOf (rev: Segment list) : Path = List.rev rev
 
 let private timestampFallback (t: DateTimeOffset) : string = t.ToString("o", CultureInfo.InvariantCulture)
 
+/// The span of the nearest ancestor of `rev` (the path itself first) that has one in `spans`.
+let private spanAtOrAbove (spans: Map<string, Span>) (rev: Segment list) : Span option =
+    let rec go (r: Segment list) =
+        match Map.tryFind (Path.print (pathOf r)) spans with
+        | Some s -> Some s
+        | None ->
+            match r with
+            | [] -> None
+            | _ :: up -> go up
+    go rev
+
 /// YamlValue -> Node. `stamps` maps a node's RFC 6901 pointer (as printed by `Path.print`) to the
 /// original source text of a timestamp (`YamlParsed.TimestampText`); a Timestamp with no entry
 /// falls back to "o"-format text. Fails with `type.mismatch` on a non-string mapping key, since
-/// Fnode objects have string keys only.
-let toNodeWith (stamps: Map<string, string>) (value: YamlValue) : Result<Node, Error> =
+/// Fnode objects have string keys only; `spans` (pointer -> span, as in `Parsed.Locations`) gives that
+/// error a `Location`: the span of the mapping, or of its nearest ancestor that has one.
+let toNodeLocated (stamps: Map<string, string>) (spans: Map<string, Span>) (value: YamlValue) : Result<Node, Error> =
     let rec go (rev: Segment list) (v: YamlValue) : Result<Node, Error> =
         match v with
         | YamlValue.Null -> Ok Null
@@ -62,16 +74,21 @@ let toNodeWith (stamps: Map<string, string>) (value: YamlValue) : Result<Node, E
                 | key, _ ->
                     err <-
                         Some(
-                            Error.create
+                            { Error.create
                                 ErrorCode.typeMismatch
                                 ("Mapping key must be a string, found " + key.ToString(YamlSaveOptions.DisableFormatting).Trim())
-                                (pathOf rev)
+                                (pathOf rev) with
+                                Location = spanAtOrAbove spans rev }
                         )
                 i <- i + 1
             match err with
             | Some e -> Error e
             | None -> Ok(Obj(List.rev acc))
     go [] value
+
+/// `toNodeLocated` without spans: errors carry no `Location`.
+let toNodeWith (stamps: Map<string, string>) (value: YamlValue) : Result<Node, Error> =
+    toNodeLocated stamps Map.empty value
 
 /// `toNodeWith` without timestamp source text: Timestamps render in "o" format.
 let toNode (value: YamlValue) : Result<Node, Error> = toNodeWith Map.empty value

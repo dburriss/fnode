@@ -6,9 +6,17 @@ type Pos = { Line: int; Column: int }
 type Span = { Start: Pos; End: Pos }
 
 /// A parsed document plus the source spans of its nodes, keyed by printed JSON Pointer.
+///
+/// - `Locations`: the source span of each node.
+/// - `ScalarText`: the text each `Int`/`Float` node was written as in the source (`1.10`, `1.0`, `1e3`,
+///   or an integer beyond int64), which `Node` cannot keep. A pointer with no entry has no recoverable text
+///   (an adapter that does not provide it, or a number reached through a YAML alias); use the `Node` value.
+/// - For duplicate object keys, `Node` keeps both pairs (lookups take the first) but `Locations` and
+///   `ScalarText` describe the first occurrence only.
 type Parsed =
     { Node: Node
-      Locations: Map<string, Span> }
+      Locations: Map<string, Span>
+      ScalarText: Map<string, string> }
 
 /// Structural failure (parse, path, type).
 type Error =

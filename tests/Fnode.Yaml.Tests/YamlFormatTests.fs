@@ -261,6 +261,27 @@ let ``non-string key error carries the path of the mapping`` () =
     | other -> failwithf "%A" other
 
 [<Fact>]
+let ``non-string key error carries the location of the mapping`` () =
+    match parseErr "1: a" with
+    | [ e ] -> Assert.Equal(Some 1, e.Location |> Option.map (fun s -> s.Start.Line))
+    | other -> failwithf "%A" other
+    match parseErr "a: 1\nouter:\n  list:\n    - 1: x" with
+    | [ e ] ->
+        Assert.Equal<Path>([ Key "outer"; Key "list"; Index 0 ], e.Path)
+        match e.Location with
+        | Some s -> Assert.Equal(4, s.Start.Line)
+        | None -> failwith "no location"
+    | other -> failwithf "%A" other
+
+[<Fact>]
+let ``duplicate keys: locations describe the first occurrence`` () =
+    match Fnode.Yaml.format.Parse "a: 1\nb: 0\na: 2" with
+    | Ok p ->
+        Assert.Equal(Obj [ "a", Int 1L; "b", Int 0L; "a", Int 2L ], p.Node)
+        Assert.Equal(1, p.Locations.["/a"].Start.Line)
+    | Error es -> failwithf "%A" es
+
+[<Fact>]
 let ``Parse never throws on garbage`` () =
     for text in [ "\t"; "a: b: c"; "{"; "[,]"; "- a\nb: c"; "\"unterminated"; "&"; "*"; "%YAML 9\n---\na"; "a: !!bad x"; "\u0000" ] do
         match Fnode.Yaml.format.Parse text with

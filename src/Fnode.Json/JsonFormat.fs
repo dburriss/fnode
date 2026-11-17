@@ -16,7 +16,8 @@ module Json =
             | Ok(value, spans) ->
                 Ok
                     { Node = JsonConvert.toNode value
-                      Locations = spans |> Map.map (fun _ s -> span s) }
+                      Locations = spans |> Map.map (fun _ s -> span s)
+                      ScalarText = Map.empty }
             | Error e ->
                 let p = pos e.Pos
                 Error [ { Error.create ErrorCode.parse e.Message [] with

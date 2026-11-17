@@ -27,8 +27,9 @@ let private ofParseError (e: YamlParseError) : Error =
         Location = Some { Start = p; End = p } }
 
 let private toParsed (y: YamlParsed) : Result<Parsed, Error list> =
-    match YamlConvert.toNodeWith y.TimestampText y.Root with
-    | Ok n -> Ok { Node = n; Locations = y.Spans |> Map.map (fun _ s -> span s) }
+    let spans = y.Spans |> Map.map (fun _ s -> span s)
+    match YamlConvert.toNodeLocated y.TimestampText spans y.Root with
+    | Ok n -> Ok { Node = n; Locations = spans; ScalarText = Map.empty }
     | Error e -> Error [ e ]
 
 /// Parses exactly one document. Never throws: parse failures, multi-document input, and
