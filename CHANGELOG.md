@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `Parsed.ScalarText`: the text each `Int`/`Float` node was written as in the source (`1.10`, `1.0`, `1e3`, an integer
   beyond int64), keyed by JSON Pointer like `Locations`. `Fnode.Json` and `Fnode.Yaml` fill it from `Flexi.Json` /
-  `Flexi.Yaml` 0.2.0. A pointer with no entry has no recoverable text (an aliased YAML number reports the anchor's
-  text); use the `Node` value.
+  `Flexi.Yaml` 0.2.1. Strings, booleans, nulls and timestamps have no entry. A number reached through a YAML alias or
+  merge key reports the anchor's text.
 - `YamlConvert.toNodeLocated`, `toNodeWith` plus the spans, so the non-string-key error can carry a location.
 
 ### Fixed
@@ -28,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   default. (Flexi 0.2.0 declared 11.0.101 by accident, because the CI SDK's default had moved; 0.2.1 fixes that.)
 - For duplicate object keys, `Node` keeps every pair (lookups take the first); `Locations` and `ScalarText` describe the
   first occurrence only. Documented, behaviour unchanged.
-
 - Target frameworks are now `netstandard2.0` and `net10.0` (was `netstandard2.0` and `net8.0`; .NET 8 is out of LTS).
   Projects on .NET 8 or 9 keep working through the `netstandard2.0` assets.
 
