@@ -33,8 +33,10 @@ Last verified: 2026-11-17. `dotnet build Fnode.slnx -c Release` has 0 warnings, 
 ## Next
 
 1. [x] Priority-1 and priority-2 API fixes (see `docs/api-findings.md`).
-2. [ ] Publish the first lockstep release (`Fnode.Core`, `Fnode.Json`, `Fnode.Yaml`): `NUGET_USER` secret, Trusted Publishing
-   policies for the new package ids, then `scripts/publish.fsx` (versions restart from `0.0.0`). `scripts/pack.sh` refuses to
-   release a package that is missing from `Fnode.slnx`.
-3. [ ] Request the `Fnode.` package id prefix reservation on nuget.org; pick npm and PyPI names (`fnode` is taken on npm).
-4. [ ] Consumers (Fergi, Falid) take `Fnode.Core` and the adapters as package dependencies.
+2. [x] Publish the first lockstep release (`Fnode.Core`, `Fnode.Json`, `Fnode.Yaml` 0.1.0, on nuget.org, tag `v0.1.0`).
+   `scripts/pack.sh` refuses to release a package that is missing from `Fnode.slnx`.
+3. [ ] Release 0.2.0 (`Parsed.ScalarText`, the Yaml non-string-key location, net10.0, an explicit FSharp.Core 8.0.403 floor, on
+   Flexi 0.2.1): everything is committed on `main` and verified; what is left is `scripts/publish.fsx`, the tag and the push, then
+   a look at the CI-built nuspecs.
+4. [ ] Request the `Fnode.` package id prefix reservation on nuget.org; pick npm and PyPI names (`fnode` is taken on npm).
+5. [ ] Consumers (Config, Fergi, Falid) take `Fnode.Core` and the adapters as package dependencies.
