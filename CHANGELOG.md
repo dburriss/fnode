@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-17
+
 ### Added
 
 - `Parsed.ScalarText`: the text each `Int`/`Float` node was written as in the source (`1.10`, `1.0`, `1e3`, an integer

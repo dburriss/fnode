@@ -2,11 +2,15 @@
 <Project>
   <PropertyGroup>
     <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
-    <Version>0.1.0</Version>
-    <PackageReleaseNotes>`Fnode.Json` (JSON adapter on `Flexi.Json`) and `Fnode.Yaml` (YAML adapter on `Flexi.Yaml`) packages, each
-Lockstep releases: one `v*` tag packs and publishes `Fnode.Core`, `Fnode.Json` and `Fnode.Yaml` at the same
-`Fnode.Core`: the shared document core. The `Node` tree (`Int` is an exact `int64`, `Timestamp` keeps the original
-The package ships its F# sources under `fable/`, so Fable JavaScript and Python projects can use a plain</PackageReleaseNotes>
+    <Version>0.2.0</Version>
+    <PackageReleaseNotes>`Parsed.ScalarText`: the text each `Int`/`Float` node was written as in the source (`1.10`, `1.0`, `1e3`, an integer
+`YamlConvert.toNodeLocated`, `toNodeWith` plus the spans, so the non-string-key error can carry a location.
+The `Fnode.Yaml` `type.mismatch` error for a non-string mapping key now has a `Location` (the span of the mapping).
+**Breaking:** `Parsed` has a new field, `ScalarText`, so code that builds a `Parsed` record literal must set it
+`Fnode.Json` and `Fnode.Yaml` need `Flexi.Json` / `Flexi.Yaml` 0.2.1 or newer.
+The packed FSharp.Core dependency of all three packages is now an explicit minimum, 8.0.403, instead of the SDK
+For duplicate object keys, `Node` keeps every pair (lookups take the first); `Locations` and `ScalarText` describe the
+Target frameworks are now `netstandard2.0` and `net10.0` (was `netstandard2.0` and `net8.0`; .NET 8 is out of LTS).</PackageReleaseNotes>
     <Authors>Devon Burriss</Authors>
     <Copyright>Copyright © 2026 Devon Burriss</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
