@@ -260,6 +260,55 @@ let ``non-string key error carries the path of the mapping`` () =
     | [ e ] -> Assert.Equal<Path>([ Key "outer"; Key "list"; Index 0 ], e.Path)
     | other -> failwithf "%A" other
 
+let private scalarText (text: string) =
+    match Fnode.Yaml.format.Parse text with
+    | Ok p -> p.ScalarText |> Map.toList
+    | Error es -> failwithf "%A" es
+
+[<Fact>]
+let ``ScalarText keeps the number text the Node loses`` () =
+    Assert.Equal<(string * string) list>(
+        [ "/0", "1.10"; "/1", "1.0"; "/2", "2.50"; "/3", "1e3"; "/4", "7" ],
+        scalarText "[1.10, 1.0, 2.50, 1e3, 7]")
+    Assert.Equal<(string * string) list>(
+        [ "/a", "1.10"; "/b/c", "3.0" ],
+        scalarText "a: 1.10\nb:\n  c: 3.0\n  d: text")
+
+[<Fact>]
+let ``ScalarText has no entry for strings, quoted numbers or timestamps`` () =
+    Assert.Empty(scalarText "a: \"1.10\"\nb: 'x'\nc: yes\nd: 2026-10-14\ne: ~")
+
+[<Fact>]
+let ``ScalarText keys are escaped JSON Pointers`` () =
+    Assert.Equal<(string * string) list>(
+        [ "/a~1b", "1.0"; "/c~0d", "2.0" ],
+        scalarText "a/b: 1.0\nc~d: 2.0")
+
+[<Fact>]
+let ``ScalarText reports the anchor text at an alias site`` () =
+    Assert.Equal<(string * string) list>(
+        [ "/a", "1.10"; "/b", "1.10" ],
+        scalarText "a: &x 1.10\nb: *x")
+
+[<Fact>]
+let ``ScalarText covers merged-in numbers`` () =
+    let t = scalarText "base: &b\n  n: 2.50\nuse:\n  <<: *b\n  m: 1.0"
+    Assert.Contains(("/base/n", "2.50"), t)
+    Assert.Contains(("/use/m", "1.0"), t)
+    Assert.Contains(("/use/n", "2.50"), t)
+
+[<Fact>]
+let ``ScalarText for a duplicate key is the first occurrence`` () =
+    Assert.Equal<(string * string) list>([ "/a", "1.10" ], scalarText "a: 1.10\na: 2.0")
+
+[<Fact>]
+let ``parseAll gives each document its own ScalarText`` () =
+    match Fnode.Yaml.parseAll "a: 1.10\n---\nb: 2.0" with
+    | Ok [ d1; d2 ] ->
+        Assert.Equal<(string * string) list>([ "/a", "1.10" ], d1.ScalarText |> Map.toList)
+        Assert.Equal<(string * string) list>([ "/b", "2.0" ], d2.ScalarText |> Map.toList)
+    | other -> failwithf "%A" other
+
 [<Fact>]
 let ``non-string key error carries the location of the mapping`` () =
     match parseErr "1: a" with

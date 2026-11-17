@@ -29,13 +29,14 @@ let private ofParseError (e: YamlParseError) : Error =
 let private toParsed (y: YamlParsed) : Result<Parsed, Error list> =
     let spans = y.Spans |> Map.map (fun _ s -> span s)
     match YamlConvert.toNodeLocated y.TimestampText spans y.Root with
-    | Ok n -> Ok { Node = n; Locations = spans; ScalarText = Map.empty }
+    | Ok n -> Ok { Node = n; Locations = spans; ScalarText = y.NumberText }
     | Error e -> Error [ e ]
 
 /// Parses exactly one document. Never throws: parse failures, multi-document input, and
-/// non-string keys come back as an `Error list`. An empty document is `Null`. `Locations` is
-/// keyed by JSON Pointer over the expanded tree (aliases and merge keys are positioned at their
-/// site); Timestamp nodes keep their original source text.
+/// non-string keys come back as an `Error list`. An empty document is `Null`. `Locations` and
+/// `ScalarText` are keyed by JSON Pointer over the expanded tree (aliases and merge keys are positioned at
+/// their site); Timestamp nodes keep their original source text, and `ScalarText` holds the source text of
+/// each `Int`/`Float` (an aliased number reports the anchor's text).
 let parse (text: string) : Result<Parsed, Error list> =
     try
         match YamlValue.TryParseWithMetadata text with
