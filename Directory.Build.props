@@ -24,10 +24,15 @@ The package ships its F# sources under `fable/`, so Fable JavaScript and Python 
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Fnode.Core' And '$(MSBuildProjectName)' != 'Fnode.Tests'">
-    <!-- Flexi.Json 0.2.0 needs FSharp.Core 11.0.101 or newer; the projects that reference it must not pin lower
-         (NU1605). The core stays on the SDK default so Fnode.Core does not force a newer version on its own
-         consumers. -->
+  <!-- The packed FSharp.Core dependency is an explicit minimum, so it does not follow whichever SDK CI installs
+       (`10.0.x` resolves to the newest one, whose implicit default can be higher than the one used locally).
+       The code uses no FSharp.Core feature newer than this; raise it only when it does. -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Fnode.Core'">
+    <FSharpCoreImplicitPackageVersion>8.0.403</FSharpCoreImplicitPackageVersion>
+  </PropertyGroup>
+  <!-- TEMPORARY: Flexi.Json / Flexi.Yaml 0.2.0 declare FSharp.Core 11.0.101 (an accident of the SDK that built them).
+       Once 0.2.1 is out with an 8.0.403 floor, move the adapters to 8.0.403 like the core and delete this group. -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Fnode.Json' Or '$(MSBuildProjectName)' == 'Fnode.Yaml' Or '$(MSBuildProjectName)' == 'Fnode.Conformance' Or '$(MSBuildProjectName)' == 'Fnode.Json.Tests' Or '$(MSBuildProjectName)' == 'Fnode.Yaml.Tests'">
     <FSharpCoreImplicitPackageVersion>11.0.101</FSharpCoreImplicitPackageVersion>
   </PropertyGroup>
 </Project>
