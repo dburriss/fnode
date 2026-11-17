@@ -31,11 +31,11 @@ Why: YAML `1.10` became `Float 1.1` and `1.0` became `Float 1`, and JSON integer
 it read, including through YAML aliases.
 
 Rejected:
-- **Slicing the source by span in the adapters**: works without a Flexi release, but an aliased number's span is the
+- **Slicing the source by span in the adapters**: works without a `Flexi.Json` / `Flexi.Yaml` release, but an aliased number's span is the
   alias token, so it needs a re-parse guard and still has no text there.
 - **`Node.Number of string` or a text field on `Float`/`Int`**: breaks every consumer's pattern matches.
 
-Costs: `Parsed` gained a field (source-breaking for record literals, hence 0.2.0). Flexi 0.2.0 shipped with an
+Costs: `Parsed` gained a field (source-breaking for record literals, hence 0.2.0). `Flexi.Json` and `Flexi.Yaml` 0.2.0 shipped with an
 accidental FSharp.Core 11.0.101 floor (the CI SDK's implicit default, not a code need); 0.2.1 pins 8.0.403, and Fnode
 now pins the same floor explicitly in `Directory.Build.props` so it never follows the SDK.
 Revisit if: another scalar kind needs its original text (then widen the map's meaning, not the type).
