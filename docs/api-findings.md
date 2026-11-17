@@ -1,5 +1,8 @@
 # Fnode API findings
 
+> Historical record of the Fergi spike, not current API documentation. Items marked **Done** are in the code and
+> `CHANGELOG.md`; the rest is what the spike found at the time.
+
 Findings about the `Fnode` API from the Fergi spike (delivery step 5): Fergi consumed the core by project
 reference before anything was published, so mistakes in the core API cost nothing. This is the part of the
 spike's findings document that is about Fnode; the rest (Fergi design, merge laws, Fergi under Fable) stays in

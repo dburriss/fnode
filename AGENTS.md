@@ -21,7 +21,7 @@ Run what covers your change and report the result as it is (a failing test is a 
 
 - **The core is Fable-safe.** `Fnode` compiles to .NET, Fable JS and Fable Python from the same source. There is
   **no reflection, no IO and no dependencies** in it. Keep any non-portable BCL call behind a
-  `#if FABLE_COMPILER` branch (see `docs/fable.md`).
+  `#if FABLE_COMPILER` branch (see `docs/fable-notes.md`).
 - This repo holds the core `Fnode.Core` and the adapters `Fnode.Json` and `Fnode.Yaml`, each its own project under
   `src/` and its own package. The adapters depend on `Fnode.Core` (project reference) and on `Flexi.Json` /
   `Flexi.Yaml` (`PackageReference` only); do not copy the Flexi libraries' code into this repo or add other format
@@ -51,5 +51,5 @@ Run what covers your change and report the result as it is (a failing test is a 
 
 `ARCHITECTURE.md` explains how the pieces fit and the rules they follow (read it before adding a feature).
 `STATUS.md` has the current state and the Next list; `DECISIONS.md` logs the larger decisions with their rejected
-alternatives (add an entry when you make one). `docs/fable.md` covers Fable, `docs/api-findings.md` the Fnode API findings that came out of the Fergi spike, and
+alternatives (add an entry when you make one). `docs/fable.md` and `docs/fable-notes.md` cover Fable, `docs/releasing.md` the release steps, `docs/tutorial.md` and `docs/reference.md` the user docs (update `reference.md` when the public API changes), `docs/api-findings.md` the Fnode API findings that came out of the Fergi spike, and
 `CHANGELOG.md` the release notes.

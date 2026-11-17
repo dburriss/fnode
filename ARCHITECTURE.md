@@ -42,7 +42,7 @@ context entries (`Error.withContext`). Adapters return every error they find as 
 
 `Node.Int` is an exact `int64` on all three targets (values past 2^53 survive). `Node.Timestamp` holds the
 original ISO text, so a date stays a date and a zoneless date-time stays zoneless through a round trip. See
-`docs/fable.md`.
+`docs/fable-notes.md`.
 
 ## Tests
 
