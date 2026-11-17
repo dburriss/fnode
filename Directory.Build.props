@@ -24,4 +24,10 @@ The package ships its F# sources under `fable/`, so Fable JavaScript and Python 
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Fnode.Core' And '$(MSBuildProjectName)' != 'Fnode.Tests'">
+    <!-- Flexi.Json 0.2.0 needs FSharp.Core 11.0.101 or newer; the projects that reference it must not pin lower
+         (NU1605). The core stays on the SDK default so Fnode.Core does not force a newer version on its own
+         consumers. -->
+    <FSharpCoreImplicitPackageVersion>11.0.101</FSharpCoreImplicitPackageVersion>
+  </PropertyGroup>
 </Project>

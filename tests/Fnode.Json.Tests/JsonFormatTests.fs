@@ -25,6 +25,30 @@ let ``json to node`` () =
     Assert.Equal(expected, p.Node)
 
 [<Fact>]
+let ``ScalarText keeps the number text the Node loses`` () =
+    let p = parseOk """{"a":1.10,"b":1.0,"c":1E+2,"d":-0,"e":[2.50,7],"f":12345678901234567890}"""
+    Assert.Equal<(string * string) list>(
+        [ "/a", "1.10"; "/b", "1.0"; "/c", "1E+2"; "/d", "-0"; "/e/0", "2.50"; "/e/1", "7"; "/f", "12345678901234567890" ],
+        p.ScalarText |> Map.toList)
+    Assert.Equal(Float 1.1, (match p.Node with Obj ps -> List.head ps |> snd | _ -> Null))
+
+[<Fact>]
+let ``ScalarText has no entry for strings, literals or an empty document`` () =
+    Assert.True(Map.isEmpty (parseOk """{"a":"1.10","b":true,"c":null}""").ScalarText)
+    Assert.True(Map.isEmpty (parseOk "[]").ScalarText)
+
+[<Fact>]
+let ``ScalarText keys are escaped JSON Pointers`` () =
+    let p = parseOk """{"a/b":1.0,"c~d":2.0}"""
+    Assert.Equal("1.0", p.ScalarText.["/a~1b"])
+    Assert.Equal("2.0", p.ScalarText.["/c~0d"])
+
+[<Fact>]
+let ``ScalarText for a duplicate key is the first occurrence`` () =
+    let p = parseOk """{"a":1.10,"a":2.0}"""
+    Assert.Equal<(string * string) list>([ "/a", "1.10" ], p.ScalarText |> Map.toList)
+
+[<Fact>]
 let ``node to json`` () =
     let n = Obj [ "a", Int 1L; "t", Timestamp "2024-01-01T00:00:00Z"; "l", Arr [ Null; Bool false ] ]
     let v = JsonConvert.ofNode n

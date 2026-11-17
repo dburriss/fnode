@@ -12,12 +12,12 @@ module Json =
 
     let private parse (text: string) : Result<Parsed, Error list> =
         try
-            match JsonValue.TryParseWithPositions text with
-            | Ok(value, spans) ->
+            match JsonValue.TryParseWithMetadata text with
+            | Ok parsed ->
                 Ok
-                    { Node = JsonConvert.toNode value
-                      Locations = spans |> Map.map (fun _ s -> span s)
-                      ScalarText = Map.empty }
+                    { Node = JsonConvert.toNode parsed.Root
+                      Locations = parsed.Spans |> Map.map (fun _ s -> span s)
+                      ScalarText = parsed.NumberText }
             | Error e ->
                 let p = pos e.Pos
                 Error [ { Error.create ErrorCode.parse e.Message [] with
