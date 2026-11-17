@@ -35,8 +35,9 @@ Rejected:
   alias token, so it needs a re-parse guard and still has no text there.
 - **`Node.Number of string` or a text field on `Float`/`Int`**: breaks every consumer's pattern matches.
 
-Costs: `Parsed` gained a field (source-breaking for record literals, hence 0.2.0). The Flexi 0.2.0 packages raise the
-FSharp.Core floor to 11.0.101, which the adapters inherit.
+Costs: `Parsed` gained a field (source-breaking for record literals, hence 0.2.0). Flexi 0.2.0 shipped with an
+accidental FSharp.Core 11.0.101 floor (the CI SDK's implicit default, not a code need); 0.2.1 pins 8.0.403, and Fnode
+now pins the same floor explicitly in `Directory.Build.props` so it never follows the SDK.
 Revisit if: another scalar kind needs its original text (then widen the map's meaning, not the type).
 See: `Parsed` in `src/Fnode.Core/Error.fs`, the `ScalarText` tests in both adapters' test projects.
 

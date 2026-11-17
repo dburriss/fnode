@@ -23,7 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Breaking:** `Parsed` has a new field, `ScalarText`, so code that builds a `Parsed` record literal must set it
   (`ScalarText = Map.empty`). Reading fields and `{ p with ... }` are unaffected.
-- `Fnode.Json` and `Fnode.Yaml` need `Flexi.Json` / `Flexi.Yaml` 0.2.0, which need FSharp.Core 11.0.101 or newer.
+- `Fnode.Json` and `Fnode.Yaml` need `Flexi.Json` / `Flexi.Yaml` 0.2.1 or newer.
+- The packed FSharp.Core dependency of all three packages is now an explicit minimum, 8.0.403, instead of the SDK
+  default. (Flexi 0.2.0 declared 11.0.101 by accident, because the CI SDK's default had moved; 0.2.1 fixes that.)
 - For duplicate object keys, `Node` keeps every pair (lookups take the first); `Locations` and `ScalarText` describe the
   first occurrence only. Documented, behaviour unchanged.
 
